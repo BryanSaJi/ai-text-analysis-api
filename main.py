@@ -49,6 +49,13 @@ def smart_summary(text: str, language: str):
         ]
         return " ".join(important_sentences[:2]) or sentences[0]
 
+
+@app.get("/", include_in_schema=False)
+async def health_check():
+    """Endpoint to check if the API is running."""
+    return {"status": "ok", "service": "Text Analysis API", "version": app.version}
+
+
 @app.post("/analyze_text")
 def analyze_text(request: TextRequest):
     text = request.text.strip()
